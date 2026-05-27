@@ -11,10 +11,18 @@ const app = express();
 connectDB();
 
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    process.env.CLIENT_URL,
-  ],
+  origin: function(origin, callback) {
+    const allowed = [
+      "http://localhost:5173",
+      "https://coderev-ai-two.vercel.app",
+      process.env.CLIENT_URL,
+    ];
+    if (!origin || allowed.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 }));
 app.use(express.json({ limit: "10mb" }));
