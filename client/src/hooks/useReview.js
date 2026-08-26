@@ -12,12 +12,19 @@ const useReview = () => {
     setReview(null);
 
     try {
-      const res = await api.post("/api/review", { code, prUrl, language });
+      const res = await api.post("/api/review", 
+        { code, prUrl, language },
+        { timeout: 60000 }
+      );
       setReview(res.data);
     } catch (err) {
-      setError(
-        err.response?.data?.message || "Something went wrong. Try again."
-      );
+      if (err.code === "ECONNABORTED") {
+        setError("Server is waking up, please try again in 30 seconds.");
+      } else {
+        setError(
+          err.response?.data?.message || "Something went wrong. Try again."
+        );
+      }
     } finally {
       setLoading(false);
     }

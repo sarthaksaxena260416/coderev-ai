@@ -27,7 +27,7 @@ const Loader = () => {
           Reviewing your code...
         </p>
         <p style={{ color: "#6b7280", fontSize: "13px", margin: 0 }}>
-          Checking bugs, security, performance & best practices
+          This may take up to 30 seconds on first load
         </p>
       </div>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
